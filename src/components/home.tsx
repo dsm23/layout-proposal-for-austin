@@ -48,9 +48,9 @@ const Home = () => (
         </p>
       </div>
       <div className="mt-6 max-w-prose mx-auto">
-        <Link to="/call" component={Anchor}>
+        <Anchor to="/call" as={Link}>
           Go to App
-        </Link>
+        </Anchor>
       </div>
     </div>
   </div>
