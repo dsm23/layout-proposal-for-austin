@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes } from 'react';
 import mergeRefs from 'react-merge-refs';
 import useMeasure from 'react-use-measure';
-import { styled } from 'twin.macro';
+import styled from 'styled-components';
 
 import { PANEL_SCREEN_HEIGHT } from '../constants';
 import { getPanelHeight } from '../utils';

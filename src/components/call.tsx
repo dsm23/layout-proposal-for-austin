@@ -16,13 +16,14 @@ import { useDrag } from 'react-use-gesture';
 import useMeasure from 'react-use-measure';
 import { usePrevious } from 'react-use';
 
-import { theme } from 'twin.macro';
+import resolveConfig from 'tailwindcss/resolveConfig';
+import tailwindConfig from 'tailwind.config.js';
 
 import useMedia from '../useMedia';
 
-import AspectRatio from './aspectRatio';
+import AspectRatio from './aspect-ratio';
 import Panel from './panel';
-import ScreenPanel from './screenPanel';
+import ScreenPanel from './screen-panel';
 
 import { PANEL_DEFAULT, PANEL_SCREEN_HEIGHT } from '../constants';
 import { BottomThreeState, ItemsState, PanelState } from '../types';
@@ -33,6 +34,8 @@ import {
   rmItemArray,
   xorTwoArraysNonSymmetry,
 } from '../utils';
+
+const fullConfig = resolveConfig(tailwindConfig);
 
 type SpringProps = {
   x?: number;
@@ -45,63 +48,63 @@ type SpringProps = {
 
 const data = [
   {
-    color: theme`colors.red.100`,
+    color: fullConfig.theme?.colors?.red[100],
     key: 0,
   },
   {
-    color: theme`colors.yellow.100`,
+    color: fullConfig.theme?.colors?.yellow[100],
     key: 1,
   },
   {
-    color: theme`colors.green.100`,
+    color: fullConfig.theme?.colors?.green[100],
     key: 2,
   },
   {
-    color: theme`colors.blue.100`,
+    color: fullConfig.theme?.colors?.blue[100],
     key: 3,
   },
   {
-    color: theme`colors.indigo.100`,
+    color: fullConfig.theme?.colors?.indigo[100],
     key: 4,
   },
   {
-    color: theme`colors.purple.100`,
+    color: fullConfig.theme?.colors?.purple[100],
     key: 5,
   },
   {
-    color: theme`colors.pink.100`,
+    color: fullConfig.theme?.colors?.pink[100],
     key: 6,
   },
   {
-    color: theme`colors.red.100`,
+    color: fullConfig.theme?.colors?.red[100],
     key: 7,
   },
   {
-    color: theme`colors.yellow.100`,
+    color: fullConfig.theme?.colors?.yellow[100],
     key: 8,
   },
   {
-    color: theme`colors.green.100`,
+    color: fullConfig.theme?.colors?.green[100],
     key: 9,
   },
   {
-    color: theme`colors.blue.100`,
+    color: fullConfig.theme?.colors?.blue[100],
     key: 10,
   },
   {
-    color: theme`colors.indigo.100`,
+    color: fullConfig.theme?.colors?.indigo[100],
     key: 11,
   },
   {
-    color: theme`colors.purple.100`,
+    color: fullConfig.theme?.colors?.purple[100],
     key: 12,
   },
   {
-    color: theme`colors.pink.100`,
+    color: fullConfig.theme?.colors?.pink[100],
     key: 13,
   },
   {
-    color: theme`colors.green.100`,
+    color: fullConfig.theme?.colors?.green[100],
     key: 14,
   },
 ];
@@ -221,21 +224,24 @@ const Call = () => {
     }));
   }, [bottomThree]);
 
-  const handleClick = (
-    key: number,
-  ): MouseEventHandler<HTMLDivElement> => event => {
-    if (event.ctrlKey || event.shiftKey) {
-      if (bottomThree.includes(key)) {
-        return dispatch({ type: BottomThreeState.Remove, removalTarget: key });
-      }
+  const handleClick =
+    (key: number): MouseEventHandler<HTMLDivElement> =>
+    event => {
+      if (event.ctrlKey || event.shiftKey) {
+        if (bottomThree.includes(key)) {
+          return dispatch({
+            type: BottomThreeState.Remove,
+            removalTarget: key,
+          });
+        }
 
-      if (bottomThree.length < 3) {
-        return dispatch({ type: BottomThreeState.Add, additionTarget: key });
+        if (bottomThree.length < 3) {
+          return dispatch({ type: BottomThreeState.Add, additionTarget: key });
+        }
+      } else if (bottomThree.length !== 3) {
+        return dispatch({ type: BottomThreeState.Reset });
       }
-    } else if (bottomThree.length !== 3) {
-      return dispatch({ type: BottomThreeState.Reset });
-    }
-  };
+    };
 
   const startedInLastRow = (i: number): boolean => items.length - columns < i;
 
@@ -243,9 +249,8 @@ const Call = () => {
     ({ args: [originalIndex], down, movement: [mx, my], xy: [_, y] }) => {
       let newOrder: number[];
 
-      const { height: panelHeight, width: panelWidth } = getPanelDimensions(
-        originalIndex,
-      );
+      const { height: panelHeight, width: panelWidth } =
+        getPanelDimensions(originalIndex);
 
       const isLastRow = (): boolean =>
         y > (Math.floor(items.length / columns) + 0.5) * panelHeight;
@@ -335,38 +340,38 @@ const Call = () => {
   };
 
   return (
-    <div tw="bg-gray-900 flex flex-col h-full min-h-screen w-screen">
-      <ScreenPanel as="header" tw="flex justify-center items-center">
-        <span tw="text-white">heading</span>
+    <div className="bg-gray-900 flex flex-col h-full min-h-screen w-screen">
+      <ScreenPanel as="header" className="flex justify-center items-center">
+        <span className="text-white">heading</span>
         {/* TODO: check */}
         <button
-          tw="ml-2 text-white"
+          className="ml-2 text-white"
           onClick={removeItem(items[items.length - 1].key)}
         >
           remove
         </button>
       </ScreenPanel>
       <main
-        tw="flex-grow flex justify-center items-center h-full w-full"
+        className="flex-grow flex justify-center items-center h-full w-full"
         ref={ref}
       >
-        <h1 tw="sr-only">Call room</h1>
+        <h1 className="sr-only">Call room</h1>
         <AspectRatio
-          tw="w-full"
+          className="w-full"
           style={{
             // minHeight: 1000,
             height: getPanelHeight(width),
             // TODO: improve
           }}
         >
-          <div tw="relative h-full w-full">
+          <div className="relative h-full w-full">
             {springs.map((style, index) => {
               const k = order.current.indexOf(items[index].key);
 
               return (
                 // @ts-ignore
                 <a.div
-                  tw="absolute rounded"
+                  className="absolute rounded"
                   {...(panel === PanelState.Standard
                     ? dragBind(items[index].key)
                     : {})}
@@ -395,8 +400,11 @@ const Call = () => {
           </div>
         </AspectRatio>
       </main>
-      <ScreenPanel as="footer" tw="w-full flex justify-center items-center">
-        <span tw="text-white">footer</span>
+      <ScreenPanel
+        as="footer"
+        className="w-full flex justify-center items-center"
+      >
+        <span className="text-white">footer</span>
       </ScreenPanel>
     </div>
   );

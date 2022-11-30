@@ -1,7 +1,10 @@
 import { FunctionComponent, SVGAttributes } from 'react';
-import { theme } from 'twin.macro';
+import resolveConfig from 'tailwindcss/resolveConfig';
+import tailwindConfig from 'tailwind.config.js';
 
 type Props = SVGAttributes<SVGSVGElement>;
+
+const fullConfig = resolveConfig(tailwindConfig);
 
 const User: FunctionComponent<Props> = props => (
   <svg
@@ -15,14 +18,14 @@ const User: FunctionComponent<Props> = props => (
     <path
       strokeLinecap="square"
       strokeMiterlimit={10}
-      stroke={theme`colors.purple.500`}
+      stroke={fullConfig.theme?.colors?.purple[500]}
       d="M19.33 18.79A8.002 8.002 0 0012 14c-3.28 0-6.09 1.97-7.33 4.79"
     />
     <path d="M12 14a4 4 0 100-8 4 4 0 000 8z" />
     <path
       strokeLinecap="square"
       strokeMiterlimit={10}
-      stroke={theme`colors.purple.500`}
+      stroke={fullConfig.theme?.colors?.purple[500]}
       d="M12 14a4 4 0 100-8 4 4 0 000 8z"
     />
   </svg>

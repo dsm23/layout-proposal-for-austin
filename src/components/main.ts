@@ -1,4 +1,4 @@
-import { styled } from 'twin.macro';
+import styled from 'styled-components';
 import { PANEL_SCREEN_HEIGHT } from '../constants';
 
 const Main = styled.main`

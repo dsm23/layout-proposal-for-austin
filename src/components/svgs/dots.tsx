@@ -1,5 +1,4 @@
 import { FunctionComponent, SVGAttributes } from 'react';
-import { theme } from 'twin.macro';
 
 type Props = SVGAttributes<SVGSVGElement>;
 

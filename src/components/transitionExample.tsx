@@ -2,71 +2,75 @@ import { useState, useEffect, useMemo } from 'react';
 import { useTransition, a, config } from '@react-spring/web';
 import shuffle from 'lodash/shuffle';
 import useMeasure from 'react-use-measure';
+import styled from 'styled-components';
 
-import { styled, theme } from 'twin.macro';
+import resolveConfig from 'tailwindcss/resolveConfig';
+import tailwindConfig from 'tailwind.config.js';
 
 import useMedia from '../useMedia';
 
 import Main from './main';
-import ScreenPanel from './screenPanel';
+import ScreenPanel from './screen-panel';
 import User from './svgs/user';
-import AspectRatio from './aspectRatio';
+import AspectRatio from './aspect-ratio';
+
+const fullConfig = resolveConfig(tailwindConfig);
 
 const data = [
   {
-    color: theme`colors.red.100`,
+    color: fullConfig.theme?.colors?.red[100],
     key: 'aa',
   },
   {
-    color: theme`colors.yellow.100`,
+    color: fullConfig.theme?.colors?.yellow[100],
     key: 'bb',
   },
   {
-    color: theme`colors.green.100`,
+    color: fullConfig.theme?.colors?.green[100],
     key: 'cc',
   },
   {
-    color: theme`colors.blue.100`,
+    color: fullConfig.theme?.colors?.blue[100],
     key: 'dd',
   },
   {
-    color: theme`colors.indigo.100`,
+    color: fullConfig.theme?.colors?.indigo[100],
     key: 'ee',
   },
   {
-    color: theme`colors.purple.100`,
+    color: fullConfig.theme?.colors?.purple[100],
     key: 'ff',
   },
   {
-    color: theme`colors.pink.100`,
+    color: fullConfig.theme?.colors?.pink[100],
     key: 'gg',
   },
   {
-    color: theme`colors.red.100`,
+    color: fullConfig.theme?.colors?.red[100],
     key: 'hh',
   },
   {
-    color: theme`colors.yellow.100`,
+    color: fullConfig.theme?.colors?.yellow[100],
     key: 'ii',
   },
   {
-    color: theme`colors.green.100`,
+    color: fullConfig.theme?.colors?.green[100],
     key: 'jj',
   },
   {
-    color: theme`colors.blue.100`,
+    color: fullConfig.theme?.colors?.blue[100],
     key: 'kk',
   },
   {
-    color: theme`colors.indigo.100`,
+    color: fullConfig.theme?.colors?.indigo[100],
     key: 'll',
   },
   {
-    color: theme`colors.purple.100`,
+    color: fullConfig.theme?.colors?.purple[100],
     key: 'mm',
   },
   {
-    color: theme`colors.pink.100`,
+    color: fullConfig.theme?.colors?.pink[100],
     key: 'nn',
   },
 ];
@@ -142,41 +146,44 @@ const TransitionExample = () => {
 
   const fragment = transition((style, item) => (
     // @ts-ignore
-    <a.div tw="absolute" style={style}>
-      <StyledAspectRatio tw="rounded" bgColor={item.color}>
-        <div tw="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto bg-gray-900 rounded-full">
-          <User tw="h-10 w-10" />
+    <a.div className="absolute" style={style}>
+      <StyledAspectRatio className="rounded" bgColor={item.color}>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto bg-gray-900 rounded-full">
+          <User className="h-10 w-10" />
         </div>
       </StyledAspectRatio>
     </a.div>
   ));
 
   return (
-    <div tw="bg-gray-900 flex flex-col h-full min-h-screen w-screen">
-      <ScreenPanel as="header" tw="flex justify-center items-center">
-        <span tw="text-white">heading</span>
+    <div className="bg-gray-900 flex flex-col h-full min-h-screen w-screen">
+      <ScreenPanel as="header" className="flex justify-center items-center">
+        <span className="text-white">heading</span>
         <button
-          tw="ml-2 text-white"
+          className="ml-2 text-white"
           onClick={() => set(prev => prev.slice(0, prev.length - 1))}
         >
           remove
         </button>
       </ScreenPanel>
       <main
-        tw="flex-grow flex justify-center items-center h-full w-full"
+        className="flex-grow flex justify-center items-center h-full w-full"
         ref={ref}
       >
         <AspectRatio
-          tw="h-full w-full"
+          className="h-full w-full"
           style={{
             minHeight: Math.ceil(items.length / columns) * panelHeight,
           }}
         >
-          <div tw="relative h-full w-full">{fragment}</div>
+          <div className="relative h-full w-full">{fragment}</div>
         </AspectRatio>
       </main>
-      <ScreenPanel as="footer" tw="w-full flex justify-center items-center">
-        <span tw="text-white">footer</span>
+      <ScreenPanel
+        as="footer"
+        className="w-full flex justify-center items-center"
+      >
+        <span className="text-white">footer</span>
       </ScreenPanel>
     </div>
   );
