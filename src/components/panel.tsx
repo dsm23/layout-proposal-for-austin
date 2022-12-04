@@ -5,29 +5,20 @@ import {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
 import { Transition } from '@headlessui/react';
 import { useClickAway } from 'react-use';
 
-import AspectRatio from './aspectRatio';
+import AspectRatio from './aspect-ratio';
 import { Dots, User, UserRemove } from './svgs';
+import cn from '../utils/classnames';
 
-type StyledProps = {
-  $bgColor: string;
-};
-
-type Props = HTMLAttributes<HTMLDivElement> &
-  StyledProps & {
-    displayName: string;
-    onClick: MouseEventHandler<HTMLButtonElement>;
-  };
-
-const StyledAspectRatio = styled(AspectRatio)<StyledProps>`
-  background-color: ${({ $bgColor }) => $bgColor};
-`;
+interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
+  displayName: string;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}
 
 const Panel: FunctionComponent<Props> = ({
-  $bgColor,
+  className,
   displayName,
   onClick,
 }) => {
@@ -49,9 +40,8 @@ const Panel: FunctionComponent<Props> = ({
   });
 
   return (
-    <StyledAspectRatio
-      className="rounded relative overflow-hidden"
-      $bgColor={$bgColor}
+    <AspectRatio
+      className={cn('rounded relative overflow-hidden', className)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       ref={dropdownRef}
@@ -83,7 +73,7 @@ const Panel: FunctionComponent<Props> = ({
                 aria-labelledby="options-menu"
               >
                 <button
-                  className="block flex px-2 py-2 text-sm text-right right-0 text-gray-700 hover:(bg-gray-100 text-gray-900)"
+                  className="flex px-2 py-2 text-sm text-right right-0 text-gray-700 hover:(bg-gray-100 text-gray-900)"
                   role="menuitem"
                   onClick={args => {
                     onClick(args);
@@ -104,7 +94,7 @@ const Panel: FunctionComponent<Props> = ({
       <div className="absolute bottom-0 left-0 px-1 py-0.5 ml-2 mb-2 bg-gray-800 opacity-40 text-white rounded">
         {displayName}
       </div>
-    </StyledAspectRatio>
+    </AspectRatio>
   );
 };
 

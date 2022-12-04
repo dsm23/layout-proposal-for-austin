@@ -16,7 +16,7 @@ import styles from './styles.module.css';
 export type PlymorphicProps<E extends ElementType = ElementType> = {
   as?: E;
   className?: string;
-  style: CSSProperties;
+  style?: CSSProperties;
 };
 
 export type Props<E extends ElementType> = PlymorphicProps<E> &

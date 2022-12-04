@@ -1,23 +1,18 @@
 import {
-  CSSProperties,
   MouseEventHandler,
   useEffect,
   useMemo,
   useReducer,
   useRef,
-  useState,
 } from 'react';
 import { useSprings, a, config } from '@react-spring/web';
 // no types package
 // @ts-ignore
 import swap from 'lodash-move';
 import clamp from 'lodash/clamp';
-import { useDrag } from 'react-use-gesture';
+import { useDrag } from '@use-gesture/react';
 import useMeasure from 'react-use-measure';
 import { usePrevious } from 'react-use';
-
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from 'tailwind.config.js';
 
 import useMedia from '../useMedia';
 
@@ -25,7 +20,7 @@ import AspectRatio from './aspect-ratio';
 import Panel from './panel';
 import ScreenPanel from './screen-panel';
 
-import { PANEL_DEFAULT, PANEL_SCREEN_HEIGHT } from '../constants';
+import { PANEL_DEFAULT } from '../constants';
 import { BottomThreeState, ItemsState, PanelState } from '../types';
 import {
   getPanelHeight,
@@ -35,76 +30,73 @@ import {
   xorTwoArraysNonSymmetry,
 } from '../utils';
 
-const fullConfig = resolveConfig(tailwindConfig);
-
 type SpringProps = {
   x?: number;
   y?: number;
   height?: number;
   width?: number;
-  // border?: CSSProperties['border'];
   border?: string;
 };
 
 const data = [
   {
-    color: fullConfig.theme?.colors?.red[100],
+    color: 'bg-red-100',
     key: 0,
   },
   {
-    color: fullConfig.theme?.colors?.yellow[100],
+    color: 'bg-yellow-100',
     key: 1,
   },
   {
-    color: fullConfig.theme?.colors?.green[100],
+    color: 'bg-green-100',
     key: 2,
   },
   {
-    color: fullConfig.theme?.colors?.blue[100],
+    color: 'bg-blue-100',
     key: 3,
   },
   {
-    color: fullConfig.theme?.colors?.indigo[100],
+    color: 'bg-indigo-100',
     key: 4,
   },
   {
-    color: fullConfig.theme?.colors?.purple[100],
+    color: 'bg-purple-100',
     key: 5,
   },
   {
-    color: fullConfig.theme?.colors?.pink[100],
+    color: 'bg-pink-100',
     key: 6,
   },
   {
-    color: fullConfig.theme?.colors?.red[100],
+    color: 'bg-red-100',
     key: 7,
   },
   {
-    color: fullConfig.theme?.colors?.yellow[100],
+    color: 'bg-yellow-100',
     key: 8,
   },
   {
-    color: fullConfig.theme?.colors?.green[100],
+    color: 'bg-green-100',
     key: 9,
   },
   {
-    color: fullConfig.theme?.colors?.blue[100],
+    color: 'bg-blue-100',
     key: 10,
   },
   {
-    color: fullConfig.theme?.colors?.indigo[100],
+    color: 'bg-indigo-100',
     key: 11,
   },
   {
-    color: fullConfig.theme?.colors?.purple[100],
+    color: 'bg-purple-100',
     key: 12,
   },
   {
-    color: fullConfig.theme?.colors?.pink[100],
+    color: 'bg-pink-100',
     key: 13,
   },
   {
-    color: fullConfig.theme?.colors?.green[100],
+    color: 'bg-green-100',
     key: 14,
   },
 ];
@@ -369,9 +361,8 @@ const Call = () => {
               const k = order.current.indexOf(items[index].key);
 
               return (
-                // @ts-ignore
                 <a.div
-                  className="absolute rounded"
+                  className="absolute rounded touch-none"
                   {...(panel === PanelState.Standard
                     ? dragBind(items[index].key)
                     : {})}
@@ -391,7 +382,7 @@ const Call = () => {
                 >
                   <Panel
                     displayName={`Person ${items[index].key + 1}`}
-                    $bgColor={items[index].color}
+                    className={items[index].color}
                     onClick={removeItem(items[index].key)}
                   />
                 </a.div>

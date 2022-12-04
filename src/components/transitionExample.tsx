@@ -2,82 +2,70 @@ import { useState, useEffect, useMemo } from 'react';
 import { useTransition, a, config } from '@react-spring/web';
 import shuffle from 'lodash/shuffle';
 import useMeasure from 'react-use-measure';
-import styled from 'styled-components';
-
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from 'tailwind.config.js';
-
 import useMedia from '../useMedia';
-
-import Main from './main';
 import ScreenPanel from './screen-panel';
 import User from './svgs/user';
 import AspectRatio from './aspect-ratio';
-
-const fullConfig = resolveConfig(tailwindConfig);
+import cn from '../utils/classnames';
 
 const data = [
   {
-    color: fullConfig.theme?.colors?.red[100],
+    color: 'bg-red-100',
     key: 'aa',
   },
   {
-    color: fullConfig.theme?.colors?.yellow[100],
+    color: 'bg-yellow-100',
     key: 'bb',
   },
   {
-    color: fullConfig.theme?.colors?.green[100],
+    color: 'bg-green-100',
     key: 'cc',
   },
   {
-    color: fullConfig.theme?.colors?.blue[100],
+    color: 'bg-blue-100',
     key: 'dd',
   },
   {
-    color: fullConfig.theme?.colors?.indigo[100],
+    color: 'bg-indigo-100',
     key: 'ee',
   },
   {
-    color: fullConfig.theme?.colors?.purple[100],
+    color: 'bg-purple-100',
     key: 'ff',
   },
   {
-    color: fullConfig.theme?.colors?.pink[100],
+    color: 'bg-pink-100',
     key: 'gg',
   },
   {
-    color: fullConfig.theme?.colors?.red[100],
+    color: 'bg-red-100',
     key: 'hh',
   },
   {
-    color: fullConfig.theme?.colors?.yellow[100],
+    color: 'bg-yellow-100',
     key: 'ii',
   },
   {
-    color: fullConfig.theme?.colors?.green[100],
+    color: 'bg-green-100',
     key: 'jj',
   },
   {
-    color: fullConfig.theme?.colors?.blue[100],
+    color: 'bg-blue-100',
     key: 'kk',
   },
   {
-    color: fullConfig.theme?.colors?.indigo[100],
+    color: 'bg-indigo-100',
     key: 'll',
   },
   {
-    color: fullConfig.theme?.colors?.purple[100],
+    color: 'bg-purple-100',
     key: 'mm',
   },
   {
-    color: fullConfig.theme?.colors?.pink[100],
+    color: 'bg-pink-100',
     key: 'nn',
   },
 ];
-
-const StyledAspectRatio = styled(AspectRatio)<{ bgColor: string }>`
-  background-color: ${({ bgColor }) => bgColor};
-`;
 
 const TransitionExample = () => {
   const media = useMedia(
@@ -147,11 +135,11 @@ const TransitionExample = () => {
   const fragment = transition((style, item) => (
     // @ts-ignore
     <a.div className="absolute" style={style}>
-      <StyledAspectRatio className="rounded" bgColor={item.color}>
+      <AspectRatio className={cn('rounded', item.color)}>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto bg-gray-900 rounded-full">
           <User className="h-10 w-10" />
         </div>
-      </StyledAspectRatio>
+      </AspectRatio>
     </a.div>
   ));
 
